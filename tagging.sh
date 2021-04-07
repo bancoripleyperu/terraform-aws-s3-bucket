@@ -17,7 +17,7 @@ chmod 400 ~/.ssh/id_rsa
 ssh-keygen -F github.com || ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 rm -rf /tmp/git/ && mkdir -p /tmp/git/ && cd /tmp/git/
-git clone git@bitbucket.org:${GITHUB_REPOSITORY}.git
+git clone git@github.com:${GITHUB_REPOSITORY}.git
 
 cd /tmp/git/$(echo ${GITHUB_REPOSITORY} | cut -d "/" -f2)/ && git checkout master
 git tag -a v${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION} -m "release v${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}"

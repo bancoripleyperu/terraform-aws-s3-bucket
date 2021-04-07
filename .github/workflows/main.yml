@@ -51,7 +51,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get -y install curl awscli
-        curl https://releases.hashicorp.com/terraform/0.13.6/terraform_0.13.6_linux_amd64.zip -o terraform_0.13.6_linux_amd64.zip
+        curl -s https://releases.hashicorp.com/terraform/0.13.6/terraform_0.13.6_linux_amd64.zip -o terraform_0.13.6_linux_amd64.zip
         unzip terraform_0.13.6_linux_amd64.zip && chmod +x terraform && sudo mv terraform /usr/bin/
         gem install bundler
         bundle install --jobs 4 --retry 3
