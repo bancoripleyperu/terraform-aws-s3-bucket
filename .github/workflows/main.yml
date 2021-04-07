@@ -28,6 +28,8 @@ jobs:
         AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         GIT_USER: ${{ secrets.GIT_USER }}
         GIT_PASS: ${{ secrets.GIT_PASS }}
+        GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
+        GITHUB_REF: ${{ env.GITHUB_REF }}
       run: |
         sudo apt-get update
         sudo apt-get -y install curl
@@ -46,6 +48,8 @@ jobs:
         AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         GIT_USER: ${{ secrets.GIT_USER }}
         GIT_PASS: ${{ secrets.GIT_PASS }}
+        GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
+        GITHUB_REF: ${{ env.GITHUB_REF }}
       run: |
         sudo apt-get update
         sudo apt-get -y install curl awscli
