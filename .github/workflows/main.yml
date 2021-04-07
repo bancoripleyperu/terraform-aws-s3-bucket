@@ -20,6 +20,8 @@ jobs:
       with:
         ruby-version: '2.6'
 
-    - name: Check Ruby
+    - name: Pre Build
       run: |
-        ruby -v
+        apt-get update
+        gem install bundler
+        bundle install --jobs 4 --retry 3
