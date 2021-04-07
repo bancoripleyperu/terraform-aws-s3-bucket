@@ -58,3 +58,16 @@ jobs:
         bundle exec kitchen test
         NUM=$(curl -s -u ${GIT_USER}:${GIT_PASS} -H "Content-Type:application/json" -X POST https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls -d '{"title": "release", "head": "release", "base": "master"}' | jq .number)
         curl -s -u ${GIT_USER}:${GIT_PASS} -H "Accept: application/vnd.github.v3+json" -X PUT https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${NUM}/merge -d '{"commit_title":"release", "merge_method": "merge"}'
+
+    - name: Release
+      if: github.ref == 'refs/heads/master'
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+        GIT_USER: ${{ secrets.GIT_USER }}
+        GIT_PASS: ${{ secrets.GIT_PASS }}
+      run: |
+        sudo apt-get update
+        sudo apt-get -y install curl awscli
+        bash tagging.sh
