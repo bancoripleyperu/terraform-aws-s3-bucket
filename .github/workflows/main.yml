@@ -29,7 +29,6 @@ jobs:
         GIT_USER: ${{ secrets.GIT_USER }}
         GIT_PASS: ${{ secrets.GIT_PASS }}
         GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
-        GITHUB_REF: ${{ env.GITHUB_REF }}
       run: |
         sudo apt-get update
         sudo apt-get -y install curl
@@ -37,7 +36,8 @@ jobs:
         unzip terraform_0.13.6_linux_amd64.zip && chmod +x terraform && sudo mv terraform /usr/bin/
         terraform init -backend=false
         terraform validate
-        echo "${GITHUB_REPOSITORY} ${GITHUB_REF}"
+        NUM=$(curl -u ${GIT_USER}:${GIT_PASS} -H "Content-Type:application/json" -X POST https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls -d '{"title": "release", "head": "develop", "base": "release"}' | jq .number)
+        curl -u ${GIT_USER}:${GIT_PASS} -H "Accept: application/vnd.github.v3+json" -X PUT https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${NUM}/merge -d '{"commit_title":"release", "merge_method": "merge"}'
 
     - name: Awspec
       if: github.ref == 'refs/heads/release'
@@ -48,7 +48,6 @@ jobs:
         GIT_USER: ${{ secrets.GIT_USER }}
         GIT_PASS: ${{ secrets.GIT_PASS }}
         GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
-        GITHUB_REF: ${{ env.GITHUB_REF }}
       run: |
         sudo apt-get update
         sudo apt-get -y install curl awscli
@@ -57,5 +56,5 @@ jobs:
         gem install bundler
         bundle install --jobs 4 --retry 3
         bundle exec kitchen test
-        NUM=$(curl -u ${GIT_USER}:${GIT_PASS} -H "Content-Type:application/json" -X POST https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls -d '{"title": "release", "head": "${GITHUB_REF}", "base": "master"}' | jq .number)
+        NUM=$(curl -u ${GIT_USER}:${GIT_PASS} -H "Content-Type:application/json" -X POST https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls -d '{"title": "release", "head": "release", "base": "master"}' | jq .number)
         curl -u ${GIT_USER}:${GIT_PASS} -H "Accept: application/vnd.github.v3+json" -X PUT https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${NUM}/merge -d '{"commit_title":"release", "merge_method": "merge"}'
