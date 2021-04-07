@@ -20,8 +20,12 @@ jobs:
       with:
         ruby-version: '2.6'
 
-    # - name: Pre Build
-    #   run: |
-    #     sudo apt-get update
-    #     gem install bundler
-    #     bundle install --jobs 4 --retry 3
+    - name: Awspec
+      run: |
+        sudo apt-get update
+        sudo apt-get -y install curl
+        curl https://releases.hashicorp.com/terraform/0.13.2/terraform_0.13.2_linux_amd64.zip -o terraform_0.13.2_linux_amd64.zip
+        unzip terraform_0.13.2_linux_amd64.zip && chmod +x terraform && sudo mv terraform /usr/bin/
+        gem install bundler
+        bundle install --jobs 4 --retry 3
+        bundle exec kitchen test
