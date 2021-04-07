@@ -37,8 +37,7 @@ jobs:
         unzip terraform_0.13.6_linux_amd64.zip && chmod +x terraform && sudo mv terraform /usr/bin/
         terraform init -backend=false
         terraform validate
-        NUM=$(curl -u ${GIT_USER}:${GIT_PASS} -H "Content-Type:application/json" -X POST https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls -d '{"title": "release", "head": "${GITHUB_REF}", "base": "release"}' | jq .number)
-        curl -u ${GIT_USER}:${GIT_PASS} -H "Accept: application/vnd.github.v3+json" -X PUT https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${NUM}/merge -d '{"commit_title":"release", "merge_method": "merge"}'
+        echo "${GITHUB_REPOSITORY} ${GITHUB_REF}"
 
     - name: Awspec
       if: github.ref == 'refs/heads/release'
