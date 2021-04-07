@@ -1,3 +1,14 @@
+## Usage
+
+```hcl
+module "this" {
+  source  = "bancoripleyperu/s3-bucket/aws"
+  version = "0.0.1"
+
+  bucket  = "myBucket"
+}
+```
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
