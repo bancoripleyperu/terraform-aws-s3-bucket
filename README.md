@@ -69,4 +69,4 @@ pre-commit run -a
 
 ## Autor
  
-Module managed by [Banco Ripley Peru](ripley.com.pe)
+Module managed by [Banco Ripley Peru](https://ripley.com.pe)
