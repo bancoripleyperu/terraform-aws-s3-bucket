@@ -50,9 +50,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_arn"></a> [arn](#output\_arn) | The ARN of the bucket. |
-| <a name="output_bucket_regional_domain_name"></a> [bucket\_regional\_domain\_name](#output\_bucket\_regional\_domain\_name) | The bucket region-specific domain name. |
-| <a name="output_id"></a> [id](#output\_id) | The name of the bucket. |
+| <a name="output_values"></a> [values](#output\_values) | All outputs |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Test
